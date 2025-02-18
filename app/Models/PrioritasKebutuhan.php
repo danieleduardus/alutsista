@@ -10,11 +10,11 @@ class PrioritasKebutuhan extends Model
     use HasFactory;
 
     protected $table = 'prioritas_kebutuhan';
-    protected $fillable = ['prioritas'];
+    protected $fillable = ['prioritas', 'status']; // Tambahkan 'status'
 
-    // Relasi ke RencanaKebutuhan (One-to-Many)
-    public function rencanaKebutuhan()
+    // Scope untuk hanya mengambil data yang aktif
+    public function scopeActive($query)
     {
-        return $this->hasMany(RencanaKebutuhan::class, 'prioritas_id');
+        return $query->where('status', 1);
     }
 }

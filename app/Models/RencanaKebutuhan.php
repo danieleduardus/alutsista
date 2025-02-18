@@ -10,7 +10,7 @@ class RencanaKebutuhan extends Model
     use HasFactory;
 
     protected $table = 'rencana_kebutuhan';
-    protected $fillable = ['nomor', 'judul', 'jenis_kebutuhan_id', 'prioritas_id'];
+    protected $fillable = ['nomor', 'judul', 'deskripsi', 'jenis_kebutuhan_id', 'prioritas_id'];
 
     // Relasi ke JenisKebutuhan (Many-to-One)
     public function jenisKebutuhan()

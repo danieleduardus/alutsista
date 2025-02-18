@@ -24,10 +24,14 @@ class PrioritasKebutuhanController extends Controller
             'prioritas' => 'required|string|max:50'
         ]);
 
-        PrioritasKebutuhan::create($request->all());
+        PrioritasKebutuhan::create([
+            'prioritas' => $request->prioritas,
+            'status' => 1 // Set default status aktif
+        ]);
 
         return redirect()->route('prioritas-kebutuhan.index')->with('success', 'Prioritas Kebutuhan berhasil ditambahkan.');
     }
+
 
     public function show(PrioritasKebutuhan $prioritasKebutuhan)
     {
@@ -54,5 +58,14 @@ class PrioritasKebutuhanController extends Controller
     {
         $prioritasKebutuhan->delete();
         return redirect()->route('prioritas-kebutuhan.index')->with('success', 'Prioritas Kebutuhan berhasil dihapus.');
+    }
+
+    public function toggleStatus($id)
+    {
+        $prioritasKebutuhan = PrioritasKebutuhan::findOrFail($id);
+        $prioritasKebutuhan->status = !$prioritasKebutuhan->status; // Toggle status (1 <-> 0)
+        $prioritasKebutuhan->save();
+
+        return redirect()->route('prioritas-kebutuhan.index')->with('success', 'Status berhasil diperbarui.');
     }
 }
