@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class RencanaKebutuhan extends Model
+{
+    use HasFactory;
+
+    protected $table = 'rencana_kebutuhan';
+    protected $fillable = ['nomor', 'judul', 'jenis_kebutuhan_id', 'prioritas_id'];
+
+    // Relasi ke JenisKebutuhan (Many-to-One)
+    public function jenisKebutuhan()
+    {
+        return $this->belongsTo(JenisKebutuhan::class, 'jenis_kebutuhan_id');
+    }
+
+    // Relasi ke PrioritasKebutuhan (Many-to-One)
+    public function prioritasKebutuhan()
+    {
+        return $this->belongsTo(PrioritasKebutuhan::class, 'prioritas_id');
+    }
+}
