@@ -98,8 +98,9 @@ class RencanaKebutuhanController extends Controller
     public function show($id)
     {
         $rencanaKebutuhan = RencanaKebutuhan::with(['jenisKebutuhan', 'prioritasKebutuhan'])->findOrFail($id);
+        $prioritasList = PrioritasKebutuhan::all(); // Ambil semua prioritas untuk select box
 
-        return view('rencana_kebutuhan.show', compact('rencanaKebutuhan'));
+        return view('rencana_kebutuhan.show', compact('rencanaKebutuhan', 'prioritasList'));
     }
 
 
@@ -113,4 +114,26 @@ class RencanaKebutuhanController extends Controller
 
         return redirect()->route('rencana-kebutuhan.index')->with('success', 'Rencana Kebutuhan berhasil dihapus.');
     }
+
+    public function updatePrioritas(Request $request, $id)
+    {
+        $request->validate([
+            'prioritas_id' => 'required|exists:prioritas_kebutuhan,id',
+        ]);
+
+        $rencanaKebutuhan = RencanaKebutuhan::findOrFail($id);
+
+        
+        // Pastikan pengguna memiliki kewenangan sebelum mengubah prioritas
+        if (!auth()->user()->hakAkses->menentukan_prioritas_rencana_kebutuhan) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk menentukan prioritas.');
+        }
+
+        $rencanaKebutuhan->update([
+            'prioritas_id' => $request->prioritas_id,
+        ]);
+
+        return redirect()->route('rencana-kebutuhan.show', $id)->with('success', 'Prioritas berhasil ditentukan.');
+    }
+
 }

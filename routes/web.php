@@ -6,6 +6,7 @@ use App\Http\Controllers\PrioritasKebutuhanController;
 use App\Http\Controllers\RencanaKebutuhanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\HakAksesController;
+use App\Http\Controllers\UsulanAnggaranController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,17 @@ Route::middleware('auth')->group(function () {
     Route::put('rencana-kebutuhan/{id}', [RencanaKebutuhanController::class, 'update'])->name('rencana-kebutuhan.update');
     Route::delete('rencana-kebutuhan', [RencanaKebutuhanController::class, 'destroy'])->name('rencana-kebutuhan.destroy');
     Route::get('rencana-kebutuhan/{id}', [RencanaKebutuhanController::class, 'show'])->name('rencana-kebutuhan.show');
+    Route::put('rencana-kebutuhan/{id}/update-prioritas', [RencanaKebutuhanController::class, 'updatePrioritas'])->name('rencana-kebutuhan.update-prioritas');
 
+    Route::prefix('usulan-anggaran')->name('usulan-anggaran.')->group(function () {
+        Route::get('/', [UsulanAnggaranController::class, 'index'])->name('index');
+        Route::get('create', [UsulanAnggaranController::class, 'create'])->name('create');
+        Route::post('/', [UsulanAnggaranController::class, 'store'])->name('store');
+        Route::get('{id}', [UsulanAnggaranController::class, 'show'])->name('show');
+        Route::get('{id}/edit', [UsulanAnggaranController::class, 'edit'])->name('edit');
+        Route::put('{id}', [UsulanAnggaranController::class, 'update'])->name('update');
+        Route::delete('{id}', [UsulanAnggaranController::class, 'destroy'])->name('destroy');
+    });
 
 });
 

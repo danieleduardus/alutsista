@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User; // Menggunakan model User
+use App\Models\HakAkses;
 
 class PenggunaController extends Controller
 {
@@ -12,16 +13,18 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        $pengguna = User::all();
+        $pengguna = User::with('hakAkses')->get(); // Ambil data user dengan relasi hak akses
         return view('pengguna.index', compact('pengguna'));
     }
+
 
     /**
      * Menampilkan form tambah pengguna.
      */
     public function create()
     {
-        return view('pengguna.create');
+        $hakAkses = HakAkses::all(); // Ambil semua data Hak Akses
+        return view('pengguna.create', compact('hakAkses'));
     }
 
     /**
@@ -32,17 +35,20 @@ class PenggunaController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
+            'hak_akses_id' => 'required|exists:hak_akses,id',
             'password' => 'required|min:6',
         ]);
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password), // Hashing password
+            'hak_akses_id' => $request->hak_akses_id,
+            'password' => bcrypt($request->password),
         ]);
 
         return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil ditambahkan.');
     }
+
 
 
     /**
@@ -51,7 +57,8 @@ class PenggunaController extends Controller
     public function edit($id)
     {
         $pengguna = User::findOrFail($id);
-        return view('pengguna.edit', compact('pengguna'));
+        $hakAkses = HakAkses::all(); // Ambil semua data Hak Akses
+        return view('pengguna.edit', compact('pengguna', 'hakAkses'));
     }
 
 
@@ -63,24 +70,21 @@ class PenggunaController extends Controller
         $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|min:6', // Password opsional
+            'hak_akses_id' => 'required|exists:hak_akses,id',
+            'password' => 'nullable|min:6',
         ]);
 
         $pengguna = User::findOrFail($id);
-        $data = [
+        $pengguna->update([
             'name' => $request->name,
             'email' => $request->email,
-        ];
-
-        // Hanya update password jika ada input baru
-        if ($request->filled('password')) {
-            $data['password'] = bcrypt($request->password);
-        }
-
-        $pengguna->update($data);
+            'hak_akses_id' => $request->hak_akses_id,
+            'password' => $request->password ? bcrypt($request->password) : $pengguna->password,
+        ]);
 
         return redirect()->route('pengguna.index')->with('success', 'Pengguna berhasil diperbarui.');
     }
+
 
 
     /**

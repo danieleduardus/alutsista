@@ -6,7 +6,7 @@
             <div class="p-6 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <header class="mb-4">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                        Tambah Pengguna Baru
+                        Tambah Pengguna
                     </h2>
                 </header>
 
@@ -14,7 +14,7 @@
                 <form action="{{ route('pengguna.store') }}" method="POST">
                     @csrf
 
-                    <!-- Input Nama -->
+                    <!-- Input Nama Pengguna -->
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Nama Pengguna
@@ -36,6 +36,23 @@
                                class="w-full mt-1 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-gray-100"
                                placeholder="Masukkan Email Pengguna" required>
                         @error('email')
+                            <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Pilihan Hak Akses -->
+                    <div class="mb-4">
+                        <label for="hak_akses_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Hak Akses
+                        </label>
+                        <select name="hak_akses_id" id="hak_akses_id"
+                                class="w-full mt-1 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-gray-100">
+                            <option value="">-- Pilih Hak Akses --</option>
+                            @foreach($hakAkses as $item)
+                                <option value="{{ $item->id }}">{{ $item->hak_akses }}</option>
+                            @endforeach
+                        </select>
+                        @error('hak_akses_id')
                             <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
                         @enderror
                     </div>

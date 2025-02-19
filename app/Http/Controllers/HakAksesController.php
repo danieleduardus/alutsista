@@ -36,10 +36,28 @@ class HakAksesController extends Controller
         HakAkses::create([
             'hak_akses' => $request->hak_akses,
             'status' => 1, // Default status aktif
+            'menu_master_data' => $request->has('menu_master_data') ? 1 : 0,
+            'menu_rencana_kebutuhan' => $request->has('menu_rencana_kebutuhan') ? 1 : 0,
+            'menu_usulan_anggaran' => $request->has('menu_usulan_anggaran') ? 1 : 0,
+            'menu_rfq' => $request->has('menu_rfq') ? 1 : 0,
+            'menu_kontrak' => $request->has('menu_kontrak') ? 1 : 0,
+            'mengelola_master_data' => $request->has('mengelola_master_data') ? 1 : 0,
+            'membuat_rencana_kebutuhan' => $request->has('membuat_rencana_kebutuhan') ? 1 : 0,
+            'menentukan_prioritas_rencana_kebutuhan' => $request->has('menentukan_prioritas_rencana_kebutuhan') ? 1 : 0,
+            'membuat_usulan_anggaran' => $request->has('membuat_usulan_anggaran') ? 1 : 0,
+            'mengubah_usulan_anggaran' => $request->has('mengubah_usulan_anggaran') ? 1 : 0,
+            'menyetujui_usulan_anggaran' => $request->has('menyetujui_usulan_anggaran') ? 1 : 0,
+            'membuat_rfq' => $request->has('membuat_rfq') ? 1 : 0,
+            'mengubah_rfq' => $request->has('mengubah_rfq') ? 1 : 0,
+            'menyetujui_dan_mempublikasikan_rfq' => $request->has('menyetujui_dan_mempublikasikan_rfq') ? 1 : 0,
+            'memilih_vendor_dan_penawaran' => $request->has('memilih_vendor_dan_penawaran') ? 1 : 0,
+            'menandatangani_kontrak' => $request->has('menandatangani_kontrak') ? 1 : 0,
         ]);
 
         return redirect()->route('hak-akses.index')->with('success', 'Hak Akses berhasil ditambahkan.');
     }
+
+
 
 
     /**
@@ -65,10 +83,23 @@ class HakAksesController extends Controller
         $hakAkses->update([
             'hak_akses' => $request->hak_akses,
             'status' => $request->status,
+            'menu_master_data' => $request->has('menu_master_data') ? 1 : 0,
+            'menu_rencana_kebutuhan' => $request->has('menu_rencana_kebutuhan') ? 1 : 0,
+            'menu_usulan_anggaran' => $request->has('menu_usulan_anggaran') ? 1 : 0,
+            'menu_rfq' => $request->has('menu_rfq') ? 1 : 0,
+            'menu_kontrak' => $request->has('menu_kontrak') ? 1 : 0,
+            'mengelola_master_data' => $request->has('mengelola_master_data') ? 1 : 0,
+            'membuat_rencana_kebutuhan' => $request->has('membuat_rencana_kebutuhan') ? 1 : 0,
+            'menentukan_prioritas_rencana_kebutuhan' => $request->has('menentukan_prioritas_rencana_kebutuhan') ? 1 : 0,
+            'membuat_usulan_anggaran' => $request->has('membuat_usulan_anggaran') ? 1 : 0,
+            'mengubah_usulan_anggaran' => $request->has('mengubah_usulan_anggaran') ? 1 : 0,
+            'menyetujui_usulan_anggaran' => $request->has('menyetujui_usulan_anggaran') ? 1 : 0,
         ]);
 
         return redirect()->route('hak-akses.index')->with('success', 'Hak Akses berhasil diperbarui.');
     }
+
+
 
 
     /**
