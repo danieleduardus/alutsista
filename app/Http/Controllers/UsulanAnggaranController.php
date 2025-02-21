@@ -53,7 +53,7 @@ class UsulanAnggaranController extends Controller
             'nomor' => $nomor,
             'judul' => $request->judul,
             'jumlah' => $request->jumlah,
-            'status_id' => 1
+            'status_id' => $request->status_id ?? 1, // Jika tidak ada status, default ke 1
         ]);
 
         // Update Rencana Kebutuhan dengan ID Usulan Anggaran
@@ -70,9 +70,11 @@ class UsulanAnggaranController extends Controller
      */
     public function show($id)
     {
-        $usulanAnggaran = UsulanAnggaran::with('rencanaKebutuhan')->findOrFail($id);
+        $usulanAnggaran = UsulanAnggaran::with('rencanaKebutuhan', 'status')->findOrFail($id);
         return view('usulan_anggaran.show', compact('usulanAnggaran'));
+        //return compact('usulanAnggaran');
     }
+
 
     /**
      * Menampilkan form edit usulan anggaran.
@@ -120,4 +122,15 @@ class UsulanAnggaranController extends Controller
 
         return redirect()->route('usulan-anggaran.index')->with('success', 'Usulan anggaran berhasil dihapus.');
     }
+
+    public function updateStatus($id, $status_id)
+    {
+        $usulanAnggaran = UsulanAnggaran::findOrFail($id);
+        $usulanAnggaran->update(['status_id' => $status_id]);
+        if($status_id == 2)
+            return redirect()->route('usulan-anggaran.show', $id)->with('success', 'Usulan Anggaran Disetujui.');
+        else
+            return redirect()->route('usulan-anggaran.show', $id)->with('error', 'Usulan Anggaran Ditolak.');
+    }
+
 }

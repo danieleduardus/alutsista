@@ -35,6 +35,7 @@
                                 <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left">Judul</th>
                                 <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-right">Jumlah</th>
                                 <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-right">Realisasi</th>
+                                <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-center">Status</th>
                                 <th class="border border-gray-300 dark:border-gray-700 px-4 py-2 text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -50,20 +51,39 @@
                                 <td class="px-4 py-2 border border-gray-300 dark:border-gray-700">{{ $item->judul }}</td>
                                 <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-right">{{ number_format($item->jumlah, 2) }}</td>
                                 <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-right">{{ number_format($item->realisasi, 2) }}</td>
+                                <td class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-center">
+                                @if($item->status_id == 2)
+                                    <span class="px-3 py-1 text-xs font-semibold text-green-700 dark:text-green-300 bg-green-200 dark:bg-green-700 rounded-md">{{ $item->status->status }}</span>
+                                @elseif($item->status_id == 3)
+                                    <span class="px-3 py-1 text-xs font-semibold text-red-700 dark:text-red-300 bg-red-200 dark:bg-red-700 rounded-md">{{ $item->status->status }}</span>
+                                @else
+                                    <span class="px-3 py-1 text-xs font-semibold text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-gray-700 rounded-md">{{ $item->status->status }}</span>
+                                @endif
+                                    
+                                </td>
                                 <td class="px-4 py-2 border border-gray-300 dark:border-gray-700">
                                     <div class="flex justify-center space-x-2">
-                                        <a href="{{ route('usulan-anggaran.edit', $item->id) }}"
-                                           class="px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-md hover:bg-yellow-600 transition">
-                                            Edit
-                                        </a>
+                                        @if(!$item->rfq && $item->status_id == 2) 
+                                            <a href="{{ route('rfq.create', ['usulan_anggaran_id' => $item->id]) }}"
+                                            class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 transition">
+                                                Buat RFQ
+                                            </a>
+                                        @endif
 
-                                        <form action="{{ route('usulan-anggaran.destroy', $item->id) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition" onclick="return confirm('Hapus usulan anggaran ini?')">
-                                                Hapus
-                                            </button>
-                                        </form>
+                                        @if($item->status_id == 1)
+                                            <a href="{{ route('usulan-anggaran.edit', $item->id) }}"
+                                            class="px-4 py-2 bg-yellow-500 text-white text-sm font-medium rounded-md hover:bg-yellow-600 transition">
+                                                Edit
+                                            </a>
+
+                                            <form action="{{ route('usulan-anggaran.destroy', $item->id) }}" method="POST" class="inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-md hover:bg-red-700 transition" onclick="return confirm('Hapus usulan anggaran ini?')">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

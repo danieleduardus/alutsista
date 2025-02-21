@@ -25,14 +25,19 @@ class UsulanAnggaran extends Model
      */
     public function rencanaKebutuhan()
     {
-        return $this->belongsToMany(RencanaKebutuhan::class, 'rencana_kebutuhan_usulan_anggaran', 'usulan_anggaran_id', 'rencana_kebutuhan_id');
+        return $this->hasMany(RencanaKebutuhan::class, 'usulan_anggaran_id');
     }
-
 
     // Relasi ke Status Usulan Anggaran
     public function status()
     {
         return $this->belongsTo(StatusUsulanAnggaran::class, 'status_id');
     }
+
+    public function rfq()
+    {
+        return $this->hasOne(RFQ::class, 'usulan_anggaran_id');
+    }
+
 }
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\RencanaKebutuhanController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\HakAksesController;
 use App\Http\Controllers\UsulanAnggaranController;
+use App\Http\Controllers\RFQController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,19 @@ Route::middleware('auth')->group(function () {
         Route::put('{id}', [UsulanAnggaranController::class, 'update'])->name('update');
         Route::delete('{id}', [UsulanAnggaranController::class, 'destroy'])->name('destroy');
     });
+
+    Route::put('/usulan-anggaran/{id}/update-status/{status_id}', [UsulanAnggaranController::class, 'updateStatus'])
+    ->name('usulan-anggaran.update-status');
+
+
+    Route::get('/rfq', [RFQController::class, 'index'])->name('rfq.index');
+    Route::get('rfq/create', [RFQController::class, 'create'])->name('rfq.create');
+    Route::post('rfq', [RFQController::class, 'store'])->name('rfq.store');
+    Route::get('/rfq/{id}', [RFQController::class, 'show'])->name('rfq.show');
+    Route::get('/rfq/{id}/edit', [RFQController::class, 'edit'])->name('rfq.edit');
+    Route::put('/rfq/{id}', [RFQController::class, 'update'])->name('rfq.update');
+    Route::delete('/rfq/{id}', [RFQController::class, 'destroy'])->name('rfq.destroy');
+
 
 });
 

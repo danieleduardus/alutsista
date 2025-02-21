@@ -62,6 +62,11 @@
                     <x-nav-link :href="route('usulan-anggaran.index')" :active="request()->routeIs('usulan-anggaran.*')">
                         {{ __('Usulan Anggaran') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('rfq.index')" :active="request()->routeIs('rfq.*')">
+                        {{ __('RFQ') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
