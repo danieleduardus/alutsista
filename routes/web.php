@@ -8,6 +8,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\HakAksesController;
 use App\Http\Controllers\UsulanAnggaranController;
 use App\Http\Controllers\RFQController;
+use App\Http\Controllers\VendorController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +67,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/rfq/{id}/edit', [RFQController::class, 'edit'])->name('rfq.edit');
     Route::put('/rfq/{id}', [RFQController::class, 'update'])->name('rfq.update');
     Route::delete('/rfq/{id}', [RFQController::class, 'destroy'])->name('rfq.destroy');
+
+    Route::resource('vendors', VendorController::class);
+    Route::patch('/vendors/{vendor}/toggle-status', [VendorController::class, 'toggleStatus'])->name('vendors.toggle-status');
 
 
 });

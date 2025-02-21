@@ -24,4 +24,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(HakAkses::class, 'hak_akses_id');
     }
+
+    public function vendors()
+    {
+        return $this->hasMany(Vendor::class, 'user_id');
+    }
 }

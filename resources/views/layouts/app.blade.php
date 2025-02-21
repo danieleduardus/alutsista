@@ -27,6 +27,10 @@
 
 
         <style>
+            .logo_pojok>img
+            {
+                width  :40px !important;
+            }
             .deskripsi>ol
             {
                 list-style: auto;

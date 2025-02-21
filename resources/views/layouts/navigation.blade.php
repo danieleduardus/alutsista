@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('dashboard') }}" class="logo_pojok">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
@@ -49,6 +49,10 @@
                             <a href="{{ route('hak-akses.index') }}"
                             class="block px-4 py-2 text-sm {{ request()->routeIs('hak-akses.*') ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
                                 Hak Akses
+                            </a>
+                            <a href="{{ route('vendors.index') }}"
+                            class="block px-4 py-2 text-sm {{ request()->routeIs('vendors.*') ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700' }}">
+                                Vendor
                             </a>
                         </div>
                     </div>

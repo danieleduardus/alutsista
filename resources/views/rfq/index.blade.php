@@ -29,7 +29,7 @@
                     <thead>
                         <tr class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100">
                             <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">No</th>
-                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Nomor Usulan</th>
+                            <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Nomor Usulan Anggaran</th>
                             <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Tanggal Batas Pemenuhan</th>
                             <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Status</th>
                             <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Aksi</th>
